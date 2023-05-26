@@ -1,0 +1,37 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: small;
+}
+
+#chart-container {
+    flex-direction: row;
+    display: flex;
+    align-items: center;
+    align-content: center;
+}
+
+#checkbox-container {
+    overflow: scroll;
+    width: 250px;
+    height: 600px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 3px solid gray;
+}
+
+#range-container {
+    flex-direction: row;
+    display: flex;
+}
+
+#range-container>p {
+    margin-inline: 10px;
+}
+
+
+
+.chart-line {
+    fill: none;
+    stroke: #517390;
+    stroke-width: 2px;
+  }
