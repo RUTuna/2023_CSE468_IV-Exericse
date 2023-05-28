@@ -8,5 +8,5 @@ Line Chart using D3 programming with google
 ## Exercise 2
 Stacked Bar Chart using D3 programming with ChatGPT
 
-### Exercise 3
+## Exercise 3
 Interactive Chart using D3 programming

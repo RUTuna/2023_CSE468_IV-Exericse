@@ -3,6 +3,13 @@ body {
     font-size: small;
 }
 
+#radio-container {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    width: 250px;
+}
+
 #chart-container {
     flex-direction: row;
     display: flex;
@@ -13,7 +20,7 @@ body {
 #checkbox-container {
     overflow: scroll;
     width: 250px;
-    height: 600px;
+    height: 700px;
     padding: 10px;
     border-radius: 10px;
     border: 3px solid gray;
