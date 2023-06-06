@@ -28,32 +28,42 @@ export class BubbleChart {
             .attr("transform", `translate(${vis.config.margin.left},${vis.config.margin.top})`);
 
         vis.xScale = d3.scaleLinear()
+            .domain([0, 90])
             .range([0, vis.width])
             .nice();
 
         vis.yScale = d3.scaleLinear()
+            .domain([9, 0])
             .range([0, vis.height])
             .nice();
 
         vis.zScale = d3.scaleLinear()
             .domain([2646, 7888408686])
-            .range([4, 10])
+            .range([4, 40])
 
         vis.cScale = d3.scaleOrdinal()
             .domain(vis.countries)
             .range(d3.schemeSet2);
 
         vis.xAxis = d3.axisBottom(vis.xScale)
+            .tickSize(-vis.height)
         vis.yAxis = d3.axisLeft(vis.yScale)
+            .tickSize(-vis.width)
 
 
         vis.xAxisGroup = vis.svg.append('g')
             .attr('class', 'axis x-axis')
-            .attr('transform', `translate(0,${vis.height})`);
+            .attr('transform', `translate(0,${vis.height})`)
+            .call(vis.xAxis)
+            .selectAll(".tick line")
+            .attr("color", "#4444");
         
 
         vis.yAxisGroup = vis.svg.append('g')
-            .attr('class', 'axis y-axis');
+            .attr('class', 'axis y-axis')
+            .call(vis.yAxis)
+            .selectAll(".tick line")
+            .attr("color", "#4444");
 
         vis.svg.append("text")
             .attr("text-anchor", "center")
@@ -69,8 +79,6 @@ export class BubbleChart {
             .attr("font-size", 12)
             .attr("transform", "rotate(-90)")
             .text("Fertility Rate");
-
-
     }
 
 
@@ -78,8 +86,8 @@ export class BubbleChart {
         let vis = this;
 
         // Set the scale input domains
-        vis.xScale.domain([0, d3.max(vis.data, d=>d.life_expectancy)]);
-        vis.yScale.domain([d3.max(vis.data, d=>d.fertility_rate), 0]);
+        // vis.xScale.domain([0, d3.max(vis.data, d=>d.life_expectancy)]);
+        // vis.yScale.domain([d3.max(vis.data, d=>d.fertility_rate), 0]);
         // vis.zScale.domain([d3.min(vis.data, d=>d.population), d3.max(vis.data, d=>d.population)]).range([4, 10])
 
         vis.renderVis();
@@ -100,7 +108,6 @@ export class BubbleChart {
                 .attr("cy", function (d) { return vis.yScale(d.fertility_rate); } )
                 .attr("r", function (d) { return vis.zScale(d.population); } )
                 .style("fill", function (d) { return vis.cScale(d.country); } )
-                // -3- Trigger the functions
                 .on('mouseover', (event,d) => {
                     d3.select('#tooltip')
                     .style('display', 'block')
@@ -118,15 +125,15 @@ export class BubbleChart {
                     d3.select('#tooltip').style('display', 'none');
                 });
             
-        // Update the axes
-        vis.xAxisGroup
-            .transition()
-            .duration(500)
-            .call(vis.xAxis);
-        vis.yAxisGroup
-            .transition()
-            .duration(500)
-            .call(vis.yAxis);
+
+        // vis.xAxisGroup
+        //     .transition()
+        //     .duration(500)
+        //     .call(vis.xAxis);
+        // vis.yAxisGroup
+        //     .transition()
+        //     .duration(500)
+        //     .call(vis.yAxis);
   }
 
 }
