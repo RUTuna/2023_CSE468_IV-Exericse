@@ -9,8 +9,11 @@
 <body>
     <div id="chart"></div>
     <div id="tooltip"></div>
-    <input id="slider" type="range" min="1960" max="2021" value="2019">
-    <p id="slider_value">2019</p>
+    <div id="slider_wrapper">
+        <button id="start_slider">▶︎</button>
+        <input id="slider" type="range" min="1960" max="2021" value="1960" step="0.0001">
+        <p id="slider_value">1960</p>
+    </div>
     <script src="./js/main.js" type="module"></script>
 </body>
 </html>
