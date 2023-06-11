@@ -16,13 +16,14 @@ let isAuto = false;
 let countries = []
 
 Promise.all(files.map(function(filename) {
-    return d3.csv("data/" + filename);
+    return d3.text("data/" + filename);
 })).then(function(result) {
-        data.fertility_rate = result[0]; 
-        data.life_expectancy = result[1]; 
-        data.population = result[2];
+        data.fertility_rate = d3.csvParseRows(result[0]).slice(5);; 
+        data.life_expectancy = d3.csvParseRows(result[1]).slice(5);; 
+        data.population = d3.csvParseRows(result[2]).slice(5);;
 
-        countries = result[0].map(d => d.country);
+        console.log(data)
+        countries = data.fertility_rate.map(d => d.country);
 
         let fertility_rate = changeYear(prevYear);
         bubblechart = new BubbleChart({ parentElement: '#chart'}, fertility_rate, prevYear)
@@ -34,12 +35,13 @@ Promise.all(files.map(function(filename) {
         console.error('Error loading the data : ', error);
     });
 
-function changeYear(year){
+function changeYear(mappedYear){
+    const year = mappedYear - 1956
     const processed_data = [];
     data.fertility_rate.forEach(d => {
         if(d[year]){
             const countryData = {
-              country: d["Country Name"],
+              country: d[1],
               fertility_rate: d[year],
               life_expectancy: null,
               population: null
@@ -49,7 +51,7 @@ function changeYear(year){
       });
     
       data.life_expectancy.forEach(d => {
-        const countryData = processed_data.find(country => country.country === d["Country Name"]);
+        const countryData = processed_data.find(country => country.country === d[1]);
         if (countryData) {
           if(d[year]) countryData.life_expectancy = d[year];
           else processed_data.splice(processed_data.indexOf(countryData), 1)
@@ -59,7 +61,7 @@ function changeYear(year){
       });
     
       data.population.forEach(d => {
-        const countryData = processed_data.find(country => country.country === d["Country Name"]);
+        const countryData = processed_data.find(country => country.country === d[1]);
         if (countryData) {
           if(d[year]) countryData.population = d[year];
           else processed_data.splice(processed_data.indexOf(countryData), 1)
